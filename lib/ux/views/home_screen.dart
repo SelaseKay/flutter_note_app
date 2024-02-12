@@ -4,6 +4,7 @@ import 'package:note_app/resources/app_drawables.dart';
 import 'package:note_app/resources/app_strings.dart';
 import 'package:note_app/ux/shared/custom_icon_button.dart';
 import 'package:note_app/ux/shared/empty_state.dart';
+import 'package:note_app/ux/shared/note_list_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -48,7 +49,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
+          // NoteListItem(title: "UI concepts worth exsisting", onPressed: (){})
         ],
       ),
     );

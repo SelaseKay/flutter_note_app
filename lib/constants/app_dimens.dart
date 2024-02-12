@@ -18,4 +18,8 @@ class AppDimens {
   static const paddingMedium = 24.0;
 
   static const iconButtonSize = 50.0;
+
+  static const borderRadiusSm = 10.0;
+
+  static const borderRadiusMd = 15.0;
 }
