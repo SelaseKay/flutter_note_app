@@ -6,6 +6,7 @@ import 'package:note_app/ux/navigation/navigation.dart';
 import 'package:note_app/ux/shared/custom_icon_button.dart';
 import 'package:note_app/ux/shared/empty_state.dart';
 import 'package:note_app/ux/shared/note_list_item.dart';
+import 'package:note_app/ux/views/editor_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Navigation.openEditorScreen(context: context, arguments: EditorScreenData(editorState: EditorState.edit)),
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
         child: const Icon(Icons.add),

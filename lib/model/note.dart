@@ -1,7 +1,9 @@
-// class Note {
+class Note {
+  const Note({required this.id, required this.title, required this.body});
 
-//   final int id;
+  final int id;
 
-//   final String 
+  final String title;
 
-// }
+  final String body;
+}

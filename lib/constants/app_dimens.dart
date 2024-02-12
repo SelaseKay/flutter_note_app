@@ -19,6 +19,8 @@ class AppDimens {
 
   static const paddingMedium = 24.0;
 
+  static const paddingLarge = 32.0;
+
   static const iconButtonSize = 50.0;
 
   static const textFieldHeight = 50.0;

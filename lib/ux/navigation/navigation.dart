@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/ux/shared/slide_left_route.dart';
+import 'package:note_app/ux/views/editor_screen.dart';
 import 'package:note_app/ux/views/home_screen.dart';
 import 'package:note_app/ux/views/search_notes_screen.dart';
 
@@ -11,6 +12,7 @@ class Navigation {
 
   static const entry = "/";
   static const searchNotesScreen = "search_notes_screen";
+  static const editorScreen = "editor_screen";
 
   Navigation._();
 
@@ -24,6 +26,14 @@ class Navigation {
         return SlideLeftRoute(widget: const HomeScreen());
       case searchNotesScreen:
         return SlideLeftRoute(widget: const SearchNotesScreen());
+      case editorScreen:
+        assert(settings.arguments != null);
+        assert(settings.arguments is EditorScreenData);
+        final screenData = settings.arguments as EditorScreenData;
+        return SlideLeftRoute(
+            widget: EditorScreen(
+          screenData: screenData,
+        ));
 
       default:
         return openRoute(
@@ -34,9 +44,6 @@ class Navigation {
           ),
         );
     }
-
-    
-    
   }
 
   //  static openGetStartedScreen({required BuildContext context}) {
@@ -55,24 +62,28 @@ class Navigation {
     Navigator.pushNamed(context, searchNotesScreen);
   }
 
+  static openEditorScreen({required BuildContext context, Object? arguments}) {
+    Navigator.pushNamed(context, editorScreen, arguments: arguments);
+  }
+
+  static back({required BuildContext context}) {
+    Navigator.pop(context);
+  }
+
   // static openOtpVerificationScreen(
   //     {required BuildContext context, Object? arguments}) {
   //   Navigator.pushNamed(context, otpVerificationScreen, arguments: arguments);
   // }
-
- 
-
-  
 
   // static popToPaymentsScreen({required BuildContext context}) {
   //   Navigator.of(context)
   //     ..pushNamedAndRemoveUntil(
   //         homeScreen, (route) => !Navigator.canPop(context))
   //     ..pushNamed(paymentsScreen);
-    // ..pushNamed(paymentsScreen);
+  // ..pushNamed(paymentsScreen);
 
-    // ..pushNamed(paymentsScreen);
-  }
+  // ..pushNamed(paymentsScreen);
+}
 
   // static openMain({required BuildContext context, required NavigationHostPageConfig pageConfig}) {
   //   Navigator.pushNamedAndRemoveUntil(context, main, (route) => false, arguments: pageConfig);
