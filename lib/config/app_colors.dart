@@ -7,5 +7,9 @@ class AppColors {
 
   static const gray = Color(0xFF9A9A9A);
 
-  static const iconButtonColor = Color(0xFF3B3B3B);
+  static const gray2 = Color(0xFF3B3B3B);
+
+  static const gray3 = Color(0xFFCCCCCC);
+
+
 }

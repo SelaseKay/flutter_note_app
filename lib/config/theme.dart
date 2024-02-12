@@ -8,6 +8,7 @@ class AppTheme {
 
   static final theme = ThemeData(
       primaryColor: const Color(0xFF252525),
+      scaffoldBackgroundColor:const Color(0xFF252525),
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF252525),
         primary: const Color(0xFF252525),

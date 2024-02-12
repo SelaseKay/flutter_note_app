@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/ux/shared/slide_left_route.dart';
 import 'package:note_app/ux/views/home_screen.dart';
+import 'package:note_app/ux/views/search_notes_screen.dart';
 
 class NavigationRoutes {}
 
@@ -9,6 +10,7 @@ class Navigation {
       GlobalKey<NavigatorState>();
 
   static const entry = "/";
+  static const searchNotesScreen = "search_notes_screen";
 
   Navigation._();
 
@@ -20,6 +22,8 @@ class Navigation {
     switch (settings.name) {
       case entry:
         return SlideLeftRoute(widget: const HomeScreen());
+      case searchNotesScreen:
+        return SlideLeftRoute(widget: const SearchNotesScreen());
 
       default:
         return openRoute(
@@ -45,6 +49,10 @@ class Navigation {
 
   static openHomeScreen({required BuildContext context}) {
     Navigator.pushNamed(context, entry);
+  }
+
+  static openSearchNotesScreen({required BuildContext context}) {
+    Navigator.pushNamed(context, searchNotesScreen);
   }
 
   // static openOtpVerificationScreen(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:note_app/constants/app_dimens.dart';
 import 'package:note_app/resources/app_drawables.dart';
 import 'package:note_app/resources/app_strings.dart';
+import 'package:note_app/ux/navigation/navigation.dart';
 import 'package:note_app/ux/shared/custom_icon_button.dart';
 import 'package:note_app/ux/shared/empty_state.dart';
 import 'package:note_app/ux/shared/note_list_item.dart';
@@ -12,7 +13,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Theme.of(context).primaryColor,
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 CustomIconButton(
-                  onPressed: () {},
+                  onPressed: () => Navigation.openSearchNotesScreen(context: context),
                   icon: Icons.search,
                 )
               ],
