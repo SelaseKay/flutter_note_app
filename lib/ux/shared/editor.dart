@@ -58,6 +58,7 @@ class _EditorState extends State<Editor> {
                   .headlineMedium
                   ?.copyWith(color: AppColors.gray),
               hintText: AppStrings.title,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
         ),
@@ -81,6 +82,7 @@ class _EditorState extends State<Editor> {
                   .displaySmall
                   ?.copyWith(color: AppColors.gray),
               hintText: AppStrings.typeSomething,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
         )

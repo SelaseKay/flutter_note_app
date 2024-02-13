@@ -4,6 +4,7 @@ import 'package:note_app/constants/app_dimens.dart';
 import 'package:note_app/model/note.dart';
 import 'package:note_app/resources/app_strings.dart';
 import 'package:note_app/ux/navigation/navigation.dart';
+import 'package:note_app/ux/shared/custom_dailog.dart';
 import 'package:note_app/ux/shared/custom_icon_button.dart';
 import 'package:note_app/ux/shared/editor.dart';
 import 'package:note_app/ux/shared/note_preview.dart';
@@ -36,6 +37,8 @@ class EditorScreen extends StatefulWidget {
 }
 
 class _EditorScreenState extends State<EditorScreen> {
+  var hasChanges = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +52,20 @@ class _EditorScreenState extends State<EditorScreen> {
             ),
             child: Row(children: [
               CustomIconButton(
-                onPressed: () => Navigation.back(context: context),
+                onPressed: () {
+                  if (_isChangesMade()) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CustomDialog(
+                              dialogText: AppStrings.areYouSureYouWantTo,
+                              onDiscard: () {},
+                              onSave: () {});
+                        });
+                    return;
+                  }
+                  Navigation.back(context: context);
+                },
                 icon: Icons.arrow_back_ios_rounded,
               ),
               const Spacer(),
@@ -64,13 +80,24 @@ class _EditorScreenState extends State<EditorScreen> {
                   icon: Icons.visibility_outlined,
                 ),
               ),
-              const SizedBox(width: AppDimens.paddingDefault),
               Visibility(
-                visible: widget.screenData.editorState == EditorState.edit,
+                  visible: _isEditorEmpty(),
+                  child: const SizedBox(width: AppDimens.paddingDefault)),
+              Visibility(
+                visible: _isEditorEmpty(),
                 child: CustomIconButton(
                   onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CustomDialog(
+                            dialogText: AppStrings.saveChanges,
+                            onDiscard: () {},
+                            onSave: () {},
+                          );
+                        });
                     setState(() {
-                      widget.screenData.editorState = EditorState.preview;
+                      // widget.screenData.editorState = EditorState.preview;
                     });
                   },
                   icon: Icons.save,
@@ -101,6 +128,7 @@ class _EditorScreenState extends State<EditorScreen> {
                     body: widget.screenData.note?.body ?? "",
                     onTitleChanged: (value) {
                       setState(() {
+                        hasChanges = true;
                         final note = Note(
                             id: 1,
                             title: value,
@@ -108,8 +136,9 @@ class _EditorScreenState extends State<EditorScreen> {
                         widget.screenData.note = note;
                       });
                     },
-                      onBodyChanged: (value) {
+                    onBodyChanged: (value) {
                       setState(() {
+                        hasChanges = true;
                         final note = Note(
                             id: 1,
                             title: widget.screenData.note?.title ?? "",
@@ -119,46 +148,20 @@ class _EditorScreenState extends State<EditorScreen> {
                     },
                   ),
           )
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: AppDimens.paddingMedium,
-          //   ),
-          //   child: TextField(
-          //     maxLines: 1,
-          //     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-          //           color: Colors.white,
-          //         ),
-          //     decoration: InputDecoration(
-          //       hintStyle: Theme.of(context)
-          //           .textTheme
-          //           .headlineMedium
-          //           ?.copyWith(color: AppColors.gray),
-          //       hintText: AppStrings.title,
-          //     ),
-          //   ),
-          // ),
-
-          //    Padding(
-          //                padding: const EdgeInsets.symmetric(
-          //     horizontal: AppDimens.paddingMedium,
-          //                ),
-          //                child: TextField(
-          //     style: Theme.of(context).textTheme.displaySmall?.copyWith(
-          //           color: Colors.white,
-          //         ),
-          //         keyboardType: TextInputType.multiline,
-          //         maxLines: null,
-          //     decoration: InputDecoration(
-          //       hintStyle: Theme.of(context)
-          //           .textTheme
-          //           .displaySmall
-          //           ?.copyWith(color: AppColors.gray),
-          //       hintText: AppStrings.typeSomething,
-          //     ),
-          //                ),
-          //              )
         ],
       ),
     );
+  }
+
+  bool _isEditorEmpty() {
+    return widget.screenData.editorState == EditorState.edit &&
+        (widget.screenData.note?.title.isNotEmpty ??
+            false || (widget.screenData.note?.body.isNotEmpty ?? false));
+  }
+
+  bool _isChangesMade() {
+    return hasChanges &&
+        (widget.screenData.note?.title.isNotEmpty ??
+            false || (widget.screenData.note?.body.isNotEmpty ?? false));
   }
 }

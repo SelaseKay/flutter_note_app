@@ -27,7 +27,7 @@ class NotePreview extends StatelessWidget {
                 ),
           ),
         ),
-        const SizedBox(height: AppDimens.paddingLarge,),
+        const SizedBox(height: AppDimens.normalSpacing),
         Expanded(
           child: ListView(
             padding: EdgeInsets.zero,

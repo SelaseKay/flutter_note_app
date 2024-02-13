@@ -12,4 +12,12 @@ class AppStrings {
   static const title = "Title";
 
   static const typeSomething = "Type something...";
+
+  static const saveChanges = "Save Changes?";
+
+  static const discard = "Discard";
+
+  static const save = "Save";
+
+  static const areYouSureYouWantTo = "Are you sure you want to discard your changes?";
 }

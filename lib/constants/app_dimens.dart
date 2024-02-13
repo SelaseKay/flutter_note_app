@@ -3,6 +3,8 @@ class AppDimens {
 
   static const zero = 0.0;
 
+  static const four = 4.0;
+
   static const displayLarge = 43.0;
 
   static const displayMedium = 25.0;
@@ -10,6 +12,8 @@ class AppDimens {
   static const displaySmall = 20.0;
 
   static const headlineMedium = 35.0;
+
+  static const bodyLarge = 18.0;
 
   static const paddingSmall = 4.0;
 
@@ -28,4 +32,12 @@ class AppDimens {
   static const borderRadiusSm = 10.0;
 
   static const borderRadiusMd = 15.0;
+
+  static const borderRadiusLg = 20.0;
+
+  static const dialogBtnHeight = 40.0;
+
+  static const iconSizeMd = 30.0;
+
+  static const normalSpacing = 10.0;
 }

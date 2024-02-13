@@ -33,6 +33,10 @@ class AppTheme {
             color: Colors.white,
             fontWeight: FontWeight.normal,
           ),
+          bodyLarge: _baseTextStyle.copyWith(
+            fontSize: AppDimens.bodyLarge,
+            color: Colors.white,
+          ),
           headlineMedium: _baseTextStyle.copyWith(
             fontSize: AppDimens.headlineMedium,
             color: Colors.white,
