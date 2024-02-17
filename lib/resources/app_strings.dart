@@ -20,4 +20,6 @@ class AppStrings {
   static const save = "Save";
 
   static const areYouSureYouWantTo = "Are you sure you want to discard your changes?";
+
+  static const errorMessage = "Oops, something unexpected happened";
 }

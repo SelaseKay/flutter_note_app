@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:note_app/config/app_colors.dart';
 import 'package:note_app/constants/app_dimens.dart';
 import 'package:note_app/model/note.dart';
 import 'package:note_app/resources/app_strings.dart';
+import 'package:note_app/util/utils.dart';
 import 'package:note_app/ux/navigation/navigation.dart';
 import 'package:note_app/ux/shared/custom_dailog.dart';
 import 'package:note_app/ux/shared/custom_icon_button.dart';
 import 'package:note_app/ux/shared/editor.dart';
 import 'package:note_app/ux/shared/note_preview.dart';
+import 'package:note_app/ux/viewmodel/note_viewmodel.dart';
 
 enum EditorState {
   preview,
@@ -24,7 +27,7 @@ class EditorScreenData {
   EditorState editorState;
 }
 
-class EditorScreen extends StatefulWidget {
+class EditorScreen extends ConsumerStatefulWidget {
   EditorScreen({
     super.key,
     required this.screenData,
@@ -33,11 +36,21 @@ class EditorScreen extends StatefulWidget {
   EditorScreenData screenData;
 
   @override
-  State<EditorScreen> createState() => _EditorScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _EditorScreenState();
 }
 
-class _EditorScreenState extends State<EditorScreen> {
+class _EditorScreenState extends ConsumerState<EditorScreen> {
   var hasChanges = false;
+
+  late String noteTitle;
+  late String noteBody;
+
+  @override
+  void initState() {
+    super.initState();
+    noteTitle = widget.screenData.note?.title ?? "";
+    noteBody = widget.screenData.note?.body ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +71,10 @@ class _EditorScreenState extends State<EditorScreen> {
                         context: context,
                         builder: (context) {
                           return CustomDialog(
-                              dialogText: AppStrings.areYouSureYouWantTo,
-                              onDiscard: () {},
-                              onSave: () {});
+                            dialogText: AppStrings.areYouSureYouWantTo,
+                            onDiscard: _discard,
+                            onSave: _saveNote,
+                          );
                         });
                     return;
                   }
@@ -92,8 +106,8 @@ class _EditorScreenState extends State<EditorScreen> {
                         builder: (context) {
                           return CustomDialog(
                             dialogText: AppStrings.saveChanges,
-                            onDiscard: () {},
-                            onSave: () {},
+                            onDiscard: _discard,
+                            onSave: _saveNote,
                           );
                         });
                     setState(() {
@@ -120,30 +134,22 @@ class _EditorScreenState extends State<EditorScreen> {
           Expanded(
             child: widget.screenData.editorState == EditorState.preview
                 ? NotePreview(
-                    title: widget.screenData.note?.title ?? "",
-                    body: widget.screenData.note?.body ?? "",
+                    title: noteTitle,
+                    body: noteBody,
                   )
                 : Editor(
-                    title: widget.screenData.note?.title ?? "",
-                    body: widget.screenData.note?.body ?? "",
+                    title: noteTitle,
+                    body: noteBody,
                     onTitleChanged: (value) {
                       setState(() {
                         hasChanges = true;
-                        final note = Note(
-                            id: 1,
-                            title: value,
-                            body: widget.screenData.note?.body ?? "");
-                        widget.screenData.note = note;
+                        noteTitle = value;
                       });
                     },
                     onBodyChanged: (value) {
                       setState(() {
                         hasChanges = true;
-                        final note = Note(
-                            id: 1,
-                            title: widget.screenData.note?.title ?? "",
-                            body: value);
-                        widget.screenData.note = note;
+                        noteBody = value;
                       });
                     },
                   ),
@@ -155,13 +161,33 @@ class _EditorScreenState extends State<EditorScreen> {
 
   bool _isEditorEmpty() {
     return widget.screenData.editorState == EditorState.edit &&
-        (widget.screenData.note?.title.isNotEmpty ??
-            false || (widget.screenData.note?.body.isNotEmpty ?? false));
+        (noteTitle.isNotEmpty || (noteBody.isNotEmpty));
   }
 
   bool _isChangesMade() {
-    return hasChanges &&
-        (widget.screenData.note?.title.isNotEmpty ??
-            false || (widget.screenData.note?.body.isNotEmpty ?? false));
+    return hasChanges && (noteTitle.isNotEmpty || (noteTitle.isNotEmpty));
+  }
+
+  void _saveNote() {
+    if (widget.screenData.note == null) {
+      // insert note
+      final note = Note(title: noteTitle, body: noteBody, hexColorCode: getNoteCardColor());
+      ref.read(noteViewModelProvider.notifier).addNote(note);
+      Navigation.openHomeScreen(context: context);
+      return;
+    }
+
+    if (!hasChanges) return;
+
+    //update note
+    final modifiedNote =
+        widget.screenData.note?.copyWith(title: noteTitle, body: noteBody);
+    ref.read(noteViewModelProvider.notifier).updateNote(modifiedNote!);
+    Navigation.openHomeScreen(context: context);
+  }
+
+  void _discard() {
+    Navigation.back(context: context);
+    Navigation.back(context: context);
   }
 }

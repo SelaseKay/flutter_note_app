@@ -54,9 +54,11 @@ class Navigation {
   //   );
   // }
 
-  static openHomeScreen({required BuildContext context}) {
-    Navigator.pushNamed(context, entry);
+    static openHomeScreen({required BuildContext context}) {
+    Navigator.pushNamedAndRemoveUntil(
+        context, entry, (route) => !Navigator.canPop(context));
   }
+
 
   static openSearchNotesScreen({required BuildContext context}) {
     Navigator.pushNamed(context, searchNotesScreen);

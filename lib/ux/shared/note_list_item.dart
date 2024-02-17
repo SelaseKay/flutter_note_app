@@ -6,10 +6,12 @@ class NoteListItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPressed,
+    required this.bgColorCode,
   });
 
   final String title;
   final VoidCallback onPressed;
+  final int bgColorCode;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class NoteListItem extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppDimens.borderRadiusSm),
             ),
-            color: const Color(0xFFFD99FF),
+            color: Color(bgColorCode),
             child: Padding(
               padding: const EdgeInsets.all(AppDimens.paddingMedium),
               child: Text(
