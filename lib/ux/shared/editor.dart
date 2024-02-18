@@ -43,8 +43,9 @@ class _EditorState extends State<Editor> {
             horizontal: AppDimens.paddingMedium,
           ),
           child: TextField(
-            maxLines: 1,
             controller: titleController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
             autofocus: true,
             onChanged: (value) {
               widget.onTitleChanged!(value);
