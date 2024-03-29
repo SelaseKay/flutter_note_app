@@ -1,16 +1,9 @@
 # note_app
 
-A new Flutter project.
+A mobile app for taking and saving notes.
 
-## Getting Started
+![Screenshot_20240328-150358](https://github.com/SelaseKay/flutter_note_app/assets/64037520/7396222d-b2f0-499e-819e-b92761b7d660)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot_20240328-150342](https://github.com/SelaseKay/flutter_note_app/assets/64037520/747de618-e073-44d9-a09a-65477fca290a)
